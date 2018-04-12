@@ -6,5 +6,6 @@ Disciplina: Estrutura de Dados Básicas I, Universidade Federal do Rio Grande do
 - [Daniel GUerra](https://github.com/Codigos-de-Guerra/)
 - [Oziel Alves](https://github.com/ozielalves/)
 
-### Objective:
-The purpose of this project is to implement a system that performs a simulation of *Conway's game of life*, which is a well-known example of the *cellular automaton (CA)*.
+### Objetivo:
+O objetivo deste trabalho é implementar um sistema que realize a simulação do jogo da
+vida de Conway.que é um exemplo bem conhecido de celullar automaton (CA).

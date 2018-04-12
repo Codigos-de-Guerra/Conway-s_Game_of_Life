@@ -1,2 +1,2 @@
 # Conway-s_Game_of_Life
-O objetivo deste trabalho é implementar um sistema que realize a simulação do jogo da vida de Conway, que é um exemplo bem conhecido de celullar automaton (CA).
+The purpose of this project is to implement a system that performs a simulation of *Conway's game of life*, which is a well-known example of the *cellular automaton (CA)*.

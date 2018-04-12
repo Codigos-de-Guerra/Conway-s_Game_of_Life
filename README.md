@@ -3,7 +3,7 @@
 Disciplina: Estrutura de Dados Básicas I, Universidade Federal do Rio Grande do Norte ([UFRN](http://http://www.ufrn.br))
 
 #### Alunos envolvidos
-- [Daniel GUerra](https://github.com/Codigos-de-Guerra/)
+- [Daniel Guerra](https://github.com/Codigos-de-Guerra/)
 - [Oziel Alves](https://github.com/ozielalves/)
 
 ### Objetivo:

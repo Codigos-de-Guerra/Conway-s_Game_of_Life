@@ -1,4 +1,4 @@
-# Conway-s_Game_of_Life
+# Conway's Game of Life
 
 Disciplina: Estrutura de Dados Básicas I, Universidade Federal do Rio Grande do Norte ([UFRN](http://http://www.ufrn.br))
 
@@ -8,4 +8,4 @@ Disciplina: Estrutura de Dados Básicas I, Universidade Federal do Rio Grande do
 
 ### Objetivo:
 O objetivo deste trabalho é implementar um sistema que realize a simulação do jogo da
-vida de Conway.que é um exemplo bem conhecido de celullar automaton (CA).
+vida de Conway, um exemplo bem conhecido de celullar automaton (CA).

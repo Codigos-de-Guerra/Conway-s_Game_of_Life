@@ -32,7 +32,7 @@ static void nextGeneration(){
 			count++;
 			}
 
-	}
+i	}
 }
 
 Borders correct_borders(  int m_y, int m_x, Borders *fix_border  ){

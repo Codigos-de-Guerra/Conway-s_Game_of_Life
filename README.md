@@ -35,5 +35,9 @@ make run
 # Para limpar dados residuais (objetos, executáveis e dados gerados)
 make clean
 ```
+
+### Execução:
+//TODO
+
 ##### Referências:
 - [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)

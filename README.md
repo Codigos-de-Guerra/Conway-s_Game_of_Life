@@ -6,6 +6,8 @@ Disciplina: Estrutura de Dados Básicas I, Universidade Federal do Rio Grande do
 - [Daniel Guerra](https://github.com/Codigos-de-Guerra/)
 - [Oziel Alves](https://github.com/ozielalves/)
 
+#### Doxygen link:
+
 ### Objetivo:
 O objetivo deste trabalho é implementar um sistema que realize a simulação do jogo da
 vida de Conway, um exemplo bem conhecido de celullar automaton (CA).
@@ -21,7 +23,7 @@ O universo do *Conway's Game of Life* é uma grade bidimensional infinita de `"C
 A primeira geração é criada aplicando as regras acima simultaneamente a cada célula nos nascimentos e mortes, que ocorrem simultaneamente, o momento discreto em que isso acontece é às vezes chamado de carrapato (em outras palavras, cada geração é a função pura da próxima). As regras continuam a ser aplicadas repetidamente para criar novas gerações.
 ### Compilação:
 // TODO
-#### Referências:
+##### Referências:
 // TODO
 
 THE END

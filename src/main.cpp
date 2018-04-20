@@ -1,13 +1,9 @@
-#include <iostream>
-#include <algorithm>
-#include <cstring>
-#include <fstream>
-#include <sstream>
+#include "alive.hpp"
+#include "cell.hpp"
+#include "future.hpp"
+#include "print.hpp"
 
-#include "alive.h"
-#include "cell.h"
-#include "future.h"
-#include "print.h"
+#include <sstream>
 
 int main(int argc, char **argv) {
 

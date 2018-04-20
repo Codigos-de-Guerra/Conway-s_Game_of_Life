@@ -22,8 +22,17 @@ O universo do *Conway's Game of Life* é uma grade bidimensional infinita de `"C
 
 A primeira geração é criada aplicando as regras acima simultaneamente a cada célula nos nascimentos e mortes, que ocorrem simultaneamente, o momento discreto em que isso acontece é às vezes chamado de carrapato (em outras palavras, cada geração é a função pura da próxima). As regras continuam a ser aplicadas repetidamente para criar novas gerações.
 ### Compilação:
-// TODO
-##### Referências:
-// TODO
+Para compilar, usar o seguintes comandos na raiz do repositório:
+```bash
+# Compilar:
+make
 
-THE END
+# Para compilar e executar o algoritmo com parâmetros pré-definidos
+# TODO ... [ Abobrinhas ] 
+make run
+
+# Para limpar dados residuais (objetos, executáveis e dados gerados)
+make clean
+```
+##### Referências:
+- [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)

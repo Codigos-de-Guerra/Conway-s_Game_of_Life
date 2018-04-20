@@ -19,19 +19,12 @@ class Cell{
 
   public:
     /** Common constructor. Allocates necessary usage space for matrix. Also initializes some private class variables. */
-    Cell(int height, int lenght) {
-      ptr_M = new char*[height];
-      for(int i=0; i < height; i++) {
-        *(ptr_M+i) = new char[lenght];
-      }
-
-      lin = height;
-      col = lenght;
-
-    }
+    Cell(int height, int lenght);
 
 /*------------------------Respectively, it's destructor.------------------ */
     // Freeing previous allocated space.
+
+    /// Não sei se vai dar bug deixar o destrutor *
     ~Cell() {
       for(int i=0; i < lin; i++) {
         delete [] ptr_M[i];

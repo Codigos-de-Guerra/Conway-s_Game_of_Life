@@ -6,6 +6,7 @@
 
 #ifndef CELL_H_
 #define CELL_H_
+
 #include <iostream>
 
 class Cell{
@@ -17,7 +18,7 @@ class Cell{
     char dead_cell;
 
   public:
-    /* Common constructor. Allocates necessary usage space for matrix. Also initializes some private class variables. */
+    /** Common constructor. Allocates necessary usage space for matrix. Also initializes some private class variables. */
     Cell(int height, int lenght) {
       ptr_M = new char*[height];
       for(int i=0; i < height; i++) {
@@ -36,14 +37,7 @@ class Cell{
         delete [] ptr_M[i];
       }
       delete [] ptr_M;
-    }
-    
-
-  
-  int alive_counting( int, int, Cell& );
-  
-  
-  
+    }  
 };
 
 #endif

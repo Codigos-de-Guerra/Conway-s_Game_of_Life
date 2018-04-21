@@ -1,7 +1,5 @@
-#include "alive.hpp"
 #include "cell.hpp"
-#include "future.hpp"
-#include "print.hpp"
+
 
 #include <sstream>
 
@@ -34,7 +32,9 @@ int main(int argc, char **argv) {
 	cel.print();
 
 	Cell sel(linhas, colunas);
+	sel.GenBackup(cel);
 	sel.future(cel);
+	sel.GenCompare(cel);
 	sel.print();
 
 	ifs.close();

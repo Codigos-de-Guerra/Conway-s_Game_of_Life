@@ -12,7 +12,7 @@ datdir = ./data
 CC = g++
 CFLAGS = -Wall -std=c++11 -lm -I$(incdir)
 RM = rm -v
-OBJS = $(addprefix $(bindir)/,alive.o future.o print.o)
+OBJS = $(addprefix $(bindir)/,cell.o)
 
 #STILL GOING TO ADD MORE OBJECTS
 
@@ -28,50 +28,18 @@ all: main build
 main: game
 
 # Use "make build" to build all modules
-build: alive future print
+build: cell
 
-# Use "make alive" to build only the alive module
-alive: $(bindir)/alive.o
-
-
-#/-------THERE MAY BE NO CELL MODULE-----------------------/
-# Use "make cell" to build only the cell module
-#cell: $(bindir)/cell.o
-#/------------------------------------------------/
-
-
-# Use "make future" to build only the future module
-future: $(bindir)/future.o
-
-# Use "make print" to build only the print module
-print: $(bindir)/print.o
+# Use "make cell" to build only the alive module
+cell: $(bindir)/cell.o
 
 # Compiles the main
 game: $(srcdir)/main.cpp $(OBJS)
 	mkdir -p $(bindir)
 	$(CC) $(CFLAGS) $^ -o $@
 
-# Builds only the alive module
-$(bindir)/alive.o: $(srcdir)/alive.cpp $(incdir)/alive.hpp
-	mkdir -p $(bindir)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-
-#/--------------THERE MAY BE NO CELL MODULE------------------/
 # Builds only the cell module
-#$(bindir)/cell.o: $(srcdir)/cell.cpp $(incdir)/cell.hpp
-#	mkdir -p $(bindir)
-#	$(CC) $(CFLAGS) -c $< -o $@
-#/-------------------------------------------/
-
-
-# Builds only the future module
-$(bindir)/future.o: $(srcdir)/future.cpp $(incdir)/future.hpp $(incdir)/alive.hpp
-	mkdir -p $(bindir)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Builds only the print module
-$(bindir)/print.o: $(srcdir)/print.cpp $(incdir)/print.hpp
+$(bindir)/cell.o: $(srcdir)/cell.cpp $(incdir)/cell.hpp
 	mkdir -p $(bindir)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -87,5 +55,3 @@ cleandat:
 
 # Removes all objects, executables and data input and output files
 clean: cleanbin cleandat
-
-

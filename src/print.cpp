@@ -1,6 +1,7 @@
 #include "print.hpp"
 //#include "cell.hpp"
 
+/*
 void Cell::print (void) const {
 	std::cout << "Colunas = " << col << "Linhas = " << lin << "\n";
 	for(auto i=0; i < lin; i++) {
@@ -10,3 +11,4 @@ void Cell::print (void) const {
 		std::cout << "\n";
 	}
 }
+*/

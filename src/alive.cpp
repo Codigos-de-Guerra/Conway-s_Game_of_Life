@@ -1,7 +1,7 @@
 #include "alive.hpp"
-//#include "cell.hpp"
+#include "cell.hpp"
 
-void Cell::set_alive(std::string file, std::ifstream& ifs_) {
+/*void Cell::set_alive(std::string file, std::ifstream& ifs_) {
 	std::cout << "Constructor ativado!\n";
 	int nLin, nCol;
 	char vivo, caracter;
@@ -33,7 +33,8 @@ int Cell::alive_counting(int ypos, int xpos, Cell& rhs) {
 	This section establishes from where, or until where to check the xpos positions.
 	Therefore, avoid the error of checking off-border values.
 	*/
-	//First, I considerate it being on the left border.
+	
+/*	//First, I considerate it being on the left border.
 	if(xpos == 0) {
 		inicio = xpos;
 	}
@@ -57,7 +58,7 @@ int Cell::alive_counting(int ypos, int xpos, Cell& rhs) {
 	*/
 
 	/* Only calculates when not at upper border. */
-	if(ypos > 0) {
+/*	if(ypos > 0) {
 		for( int i=inicio; i < final; i++) {
 			if(rhs.ptr_M[ypos-1][i] == rhs.live_cell) {
 				count++;
@@ -78,7 +79,7 @@ int Cell::alive_counting(int ypos, int xpos, Cell& rhs) {
 	}
 
 	/*Only calculates if i am not looking at the lower border. */
-	if(ypos < rhs.lin - 1) {
+/*	if(ypos < rhs.lin - 1) {
 		for( int i=inicio; i < final; i++) {
 			if(rhs.ptr_M[ypos+1][i] == rhs.live_cell) {
 				count++;
@@ -88,3 +89,4 @@ int Cell::alive_counting(int ypos, int xpos, Cell& rhs) {
 
 	return count;
 }
+*/

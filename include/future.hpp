@@ -7,6 +7,6 @@
 #include <fstream>
 
 // Function to determine a future generation of cells
-void Cell::future (Cell& a);
+//void Cell::future (Cell& a);
 
 #endif

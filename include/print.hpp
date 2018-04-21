@@ -4,6 +4,6 @@
 #include "cell.hpp"
 
 /// Function to print the game board
-void Cell::print (void) const;
+//void Cell::print (void) const;
 
 #endif

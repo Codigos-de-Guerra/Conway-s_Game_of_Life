@@ -4,33 +4,41 @@
 * @date April, 19th.
 */
 
-#ifndef CELL_H_
-#define CELL_H_
+#ifndef CELL_HPP_
+#define CELL_HPP_
 
 #include <iostream>
+#include <cstring>
+#include <fstream>
+#include <algorithm>
 
 class Cell{
-  private:
+  
+  //private:
+  public:
     char **ptr_M;
     int col;
     int lin;
     char live_cell;
     char dead_cell;
 
-  public:
-    /** Common constructor. Allocates necessary usage space for matrix. Also initializes some private class variables. */
-    Cell(int height, int lenght);
+  //public:
+  /** Common constructor. Allocates necessary usage space for matrix. 
+      Also initializes some private class variables. */
+    Cell( int , int );
+
+    int alive_counting( int, int, Cell& ); //Testando
+
+    void set_alive( std::string, std::ifstream& ); //Testando
+
+    void future( Cell& a ); // Testando
+
+    void print( void ) const; // Testando
+
 
 /*------------------------Respectively, it's destructor.------------------ */
-    // Freeing previous allocated space.
-
-    /// Não sei se vai dar bug deixar o destrutor *
-    ~Cell() {
-      for(int i=0; i < lin; i++) {
-        delete [] ptr_M[i];
-      }
-      delete [] ptr_M;
-    }  
-};
-
+  
+  // Freeing previous allocated space.
+    ~Cell();
+}; 
 #endif

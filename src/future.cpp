@@ -1,7 +1,7 @@
 #include "future.hpp"
 //#include "cell.hpp"
 #include "alive.hpp"
-
+/*
 void Cell::future (Cell& a) {
 	
 	live_cell = a.live_cell;
@@ -26,7 +26,7 @@ void Cell::future (Cell& a) {
 	If current cell is alive, then it must have 2 or 3 living neighbors to survive.
 	Otherwise, it dies.
 	*/
-			if(a.ptr_M[i][j] == a.live_cell) {
+/*			if(a.ptr_M[i][j] == a.live_cell) {
 				if(living_neighbors == 2 || living_neighbors == 3) {
 						ptr_M[i][j] = live_cell;
 				}
@@ -39,7 +39,7 @@ void Cell::future (Cell& a) {
 	If current cell is dead, then it must have exactly 3 neighbors in order to be bornt.
 	Otherwise, it stays dead.
 	*/
-			else {
+/*			else {
 				if(living_neighbors == 3) {
 					ptr_M[i][j] = a.live_cell;
 				}
@@ -53,3 +53,4 @@ void Cell::future (Cell& a) {
 		}
 	}
 }
+*/

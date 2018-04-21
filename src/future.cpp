@@ -1,6 +1,8 @@
-#include "future.h"
+#include "future.hpp"
+//#include "cell.hpp"
+#include "alive.hpp"
 
-void future (Cell& a) {
+void Cell::future (Cell& a) {
 	
 	live_cell = a.live_cell;
 	dead_cell = a.dead_cell;
@@ -12,8 +14,10 @@ void future (Cell& a) {
 	//------------Prints to help undestand what is going on.
 	//std::cout << "Started checking: " << i << " " << j << "\n\n";
 
+
 	//Function to determine how many alive neighbors a specific cell has.
-			int living_neighbors = alive_counting(i, j, a);
+			int living_neighbors = Cell::alive_counting(i, j, a);
+
 
 	//------------Prints to help undestand what is going on.
 	//std::cout << "Vizinhos vivos: " << living_neighbors << "\n";

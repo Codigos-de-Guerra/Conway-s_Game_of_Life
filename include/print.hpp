@@ -1,11 +1,9 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include <iostream>
-
-#include "cell.h"
+#include "cell.hpp"
 
 /// Function to print the game board
-void print (void) const;
+void Cell::print (void) const;
 
 #endif

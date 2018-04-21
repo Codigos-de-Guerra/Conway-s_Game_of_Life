@@ -1,6 +1,7 @@
-#include "alive.h"
+#include "alive.hpp"
+//#include "cell.hpp"
 
-void set_alive(std::string file, std::ifstream& ifs_) {
+void Cell::set_alive(std::string file, std::ifstream& ifs_) {
 	std::cout << "Constructor ativado!\n";
 	int nLin, nCol;
 	char vivo, caracter;
@@ -22,7 +23,7 @@ void set_alive(std::string file, std::ifstream& ifs_) {
 	ifs_.close();
 }
 
-int alive_counting(int ypos, int xpos, Cell& rhs) {
+int Cell::alive_counting(int ypos, int xpos, Cell& rhs) {
 
 	// Variable to be incremented when current cell has a living neighbor.
 	int count = 0;

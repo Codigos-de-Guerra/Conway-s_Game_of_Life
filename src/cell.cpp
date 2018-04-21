@@ -189,7 +189,6 @@ void Cell::GenCompare (Cell& a){
     	for(int j(0); j < a.col; j++) {
     		if(ptr_M_bkp[i][j] != ptr_M[i][j]){
 				stable = false;
-				break;
 			
 			} else stable = true;
 
@@ -198,7 +197,7 @@ void Cell::GenCompare (Cell& a){
 		}
 	}
 
-	if( flag == false ) // [-> The whole board is dead <-]
+	//if( flag == false ) // [-> The whole board is dead <-]
 }		
 
 void Cell::print (void) const {

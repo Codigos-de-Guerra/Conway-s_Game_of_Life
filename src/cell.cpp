@@ -7,16 +7,16 @@ Cell::Cell(int height, int lenght) {
     }
     lin = height;
     col = lenght;
-	
-	//As a padrão
-	stable = false;
 }
 
 Cell::~Cell () {
+	std::cout << "Destructor ativado!\n";
     for(int i=0; i < lin; i++) {
 		delete [] ptr_M[i];
+		delete [] ptr_M_bkp[i];
     }
     delete [] ptr_M;
+	delete [] ptr_M_bkp;
 }
 
 void Cell::set_alive (std::string file, std::ifstream& ifs_) {
@@ -99,115 +99,149 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 		//std::cout << rhs.live_cell << "\n";
 
 		//std::cout << aa << "\n";
-    if(rhs.ptr_M[ypos][i] == rhs.live_cell) {
-      if( i == xpos) continue; // This would check the cell itself, which i do not want to happen.
-      count++;
-    }
-  }
+		if(rhs.ptr_M[ypos][i] == rhs.live_cell) {
+			if( i == xpos) continue; // This would check the cell itself, which i do not want to happen.
+			count++;
+		}
+	}
 
-  /*Only calculates if i am not looking at the lower border. */
-  if(ypos < rhs.lin - 1) {
-    for( int i=inicio; i < final; i++) {
-      if(rhs.ptr_M[ypos+1][i] == rhs.live_cell) {
-        count++;
-      }
-    }
-  }
+	/*Only calculates if i am not looking at the lower border. */
+	if(ypos < rhs.lin - 1) {
+		for( int i=inicio; i < final; i++) {
+			if(rhs.ptr_M[ypos+1][i] == rhs.live_cell) {
+				count++;
+			}
+		}
+	}
 
-  return count;
+	return count;
 }
 
 void Cell::GenBackup (Cell& a){
 
 	// Making a full backup of the matrix
 	for(int i(0); i < a.lin; i++) {
-    	for(int j(0); j < a.col; j++) {
-    		ptr_M_bkp[i][j] = ptr_M[i][j]; 
+		for(int j(0); j < a.col; j++) {
+			ptr_M_bkp[i][j] = a.ptr_M[i][j]; 
 		}
 	}
 }
 
 void Cell::future (Cell& a) {
   
-  live_cell = a.live_cell;
-  dead_cell = a.dead_cell;
+	live_cell = a.live_cell;
+	dead_cell = a.dead_cell;
 
-  //Here, I check if the previous found cells follows de rules to survive and to be bornt.
-  for(int i=0; i < a.lin; i++) {
-    for(int j=0; j < a.col; j++) {
+	//Here, I check if the previous found cells follows de rules to survive and to be bornt.
+	for(int i=0; i < a.lin; i++) {
+		for(int j=0; j < a.col; j++) {
+			//------------Prints to help undestand what is going on.
+			//std::cout << "Started checking: " << i << " " << j << "\n\n";
 
-  //------------Prints to help undestand what is going on.
-  //std::cout << "Started checking: " << i << " " << j << "\n\n";
+			//Function to determine how many alive neighbors a specific cell has.
+			int living_neighbors = Cell::alive_counting(i, j, a);
 
+			//------------Prints to help undestand what is going on.
+			//std::cout << "Vizinhos vivos: " << living_neighbors << "\n";
 
-  //Function to determine how many alive neighbors a specific cell has.
-  int living_neighbors = Cell::alive_counting(i, j, a);
+			/*
+			If current cell is alive, then it must have 2 or 3 living neighbors to survive.
+			Otherwise, it dies.
+			*/
+			if(a.ptr_M[i][j] == a.live_cell) {
+				if(living_neighbors == 2 || living_neighbors == 3) {
+					ptr_M[i][j] = live_cell;
+				}
+				else {
+					ptr_M[i][j] = dead_cell;
+				}
+			}
 
-
-  //------------Prints to help undestand what is going on.
-  //std::cout << "Vizinhos vivos: " << living_neighbors << "\n";
-
-  /*
-  If current cell is alive, then it must have 2 or 3 living neighbors to survive.
-  Otherwise, it dies.
-  */
-  if(a.ptr_M[i][j] == a.live_cell) {
-    if(living_neighbors == 2 || living_neighbors == 3) {
-      ptr_M[i][j] = live_cell;
-    }
-    else{
-      ptr_M[i][j] = dead_cell;
-    }
-  }
-
-  /*
-  If current cell is dead, then it must have exactly 3 neighbors in order to be bornt.
-  Otherwise, it stays dead.
-  */
-  else {
-    if(living_neighbors == 3) {
-      ptr_M[i][j] = a.live_cell;
-    }
-    else{
-      ptr_M[i][j] = dead_cell;
-    }
-  }
-
-  //------------Prints to help undestand what is going on.
-  //std::cout << "Finished checking: " << i << " " << j << "\n\n";
-    }
-  }
+			/*
+			If current cell is dead, then it must have exactly 3 neighbors in order to be bornt.
+			Otherwise, it stays dead.
+			*/
+			else {
+				if(living_neighbors == 3) {
+					ptr_M[i][j] = a.live_cell;
+				}
+				else{
+					ptr_M[i][j] = dead_cell;
+				}
+			}
+			//------------Prints to help undestand what is going on.
+			//std::cout << "Finished checking: " << i << " " << j << "\n\n";
+		}
+	}
 }
 
 /** This function will tell me if the board is stable and/or if all the cells are
 	dead.*/ 
-void Cell::GenCompare (Cell& a){
+void Cell::GenCompare ( void ) {
 
-	bool flag = false;
+	bool flag_ex = true;//Flag that determinates if extincty has been confirmed.
+	bool flag_st = true;//Flag that sees if stability has been confirmed.
 
-	for(int i(0); i < a.lin; i++) {
-    	for(int j(0); j < a.col; j++) {
-    		if(ptr_M_bkp[i][j] != ptr_M[i][j]){
+	//As standart, we will consider both states to be true.
+	stable = true;
+	extinct = true;
+
+	/*
+	Checks if previous cell state is equal to actual cell state.
+	Equivalent to a stable function.
+	*/
+	for(int i(0); i < lin; i++) {
+    	for(int j(0); j < col; j++) {
+    		if(ptr_M_bkp[i][j] != ptr_M[i][j]) {
 				stable = false;
-			
-			} else stable = true;
-
-			// If there is at  least one living cell in the board 
-			if(ptr_M[i][j] != dead_cell) flag = true;
+				flag_st = false;
+				break;
+			}
 		}
+		if(flag_st == false) break;
 	}
 
-	//if( flag == false ) // [-> The whole board is dead <-]
+	/*
+	Checks if actual cell state represents only dead cells.
+	Equivalent to a extinct function.
+	*/
+	for(int i(0); i < lin; i++) {
+		for(int j(0); j < col; j++) {
+			if(ptr_M[i][j] != dead_cell) {
+				extinct = false;
+				flag_ex = false;
+				break;
+			}
+		}
+		if(flag_ex == false) break;
+	}
+
+	//if( flag == true ) // [-> The whole board is dead <-]
 }		
 
-void Cell::print (void) const {
-	if(stable == false) { 
-		std::cout << "Colunas = " << col << "Linhas = " << lin << "\n";
-		for(auto i=0; i < lin; i++) {
-			for(auto j=0; j < col; j++) {
-				std::cout << ptr_M[i][j];
-			}
-			std::cout << "\n";
+void Cell::print (std::ofstream& ofs_) const {
+	ofs_.open("data/saida.txt", std::ofstream::app);
+
+	for(auto i=0; i < lin; i++) {
+		for(auto j=0; j < col; j++) {
+			std::cout << ptr_M[i][j];
+			ofs_ << ptr_M[i][j];
 		}
+		std::cout << "\n";
+		ofs_ << "\n";
 	}
+	std::cout << "\n\n";
+	ofs_ << "\n\n";
+	ofs_.close();
 }
+
+bool Cell::st( void ) {
+	bool ab = stable;
+	return ab;
+}
+
+bool Cell::ex( void ) {
+	bool ba = extinct;
+	return ba;
+}
+

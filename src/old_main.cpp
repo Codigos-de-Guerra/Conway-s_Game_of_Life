@@ -211,6 +211,7 @@ int main(int argc, char **argv) {
 	cel.set_alive(in_filename, ifs);
 	cel.print();
 
+	std::cout << cel.lin << "\n";
 	Cell sel(linhas, colunas);
 	sel.future(cel);
 	sel.print();

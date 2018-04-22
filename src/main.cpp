@@ -1,6 +1,4 @@
 #include "cell.hpp"
-
-
 #include <sstream>
 
 int main(int argc, char **argv) {
@@ -24,20 +22,43 @@ int main(int argc, char **argv) {
 	input >> linhas >> colunas;
 	input.close();
 /*-----------------------------------------------------------------------------------*/
-
 	std::ifstream ifs;
+	std::ofstream ofs;
 
+/*-------Creates first cell state--------------*/
 	Cell cel(linhas, colunas);
-	cel.set_alive(in_filename, ifs);
-	cel.print();
+	cel.set_alive(in_filename, ifs);	
+	cel.print(ofs);
 
+/*--------Making next state from the first cell state---------*/
 	Cell sel(linhas, colunas);
 	sel.GenBackup(cel);
 	sel.future(cel);
-	sel.GenCompare(cel);
-	sel.print();
+	sel.GenCompare();
+	sel.print(ofs);
 
-	ifs.close();
+/*---------Now, we start asking if user wants to keep printing next states-----------------*/
+	/* Also, if the cell state is extinct or already stablized, we won't print at all */
+	while( 1 > 0) {
+		Cell temp(linhas, colunas);
+		temp.GenBackup(sel);
+		temp.future(sel);
+		temp.GenCompare();
+		
+		bool estavel = temp.st();
+		bool extinto = temp.ex();
 
+		if(estavel == true || extinto == true) {
+			break;
+		}
+		char answer; //Variable to determinated if user wants to print
+		std::cout << "Do you wish to keep printing?\nPress y (YES) or n (NO):\n";
+		std::cin >> answer;
+		if(answer == 'n' or answer == 'N') {
+			break;
+		}
+		temp.print(ofs);
+	}
+	
 	return 0;
 }

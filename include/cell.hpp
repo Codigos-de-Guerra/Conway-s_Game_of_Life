@@ -15,13 +15,10 @@
 
 class Cell{
   private:
-    char **ptr_M;
-    int col;
-    int lin;
-    char live_cell;
-    char dead_cell;
-    char **ptr_M_bkp;
-	bool stable;
+    char **ptr_M, **ptr_M_bkp;
+    int lin, col;
+    char live_cell, dead_cell;
+	bool stable, extinct;
 
   public:
     /** Common constructor. Allocates necessary usage space for matrix. 
@@ -42,9 +39,13 @@ class Cell{
 
     /** This function will compare the past and future generations and say if the 
         board is stable or not.*/
-    void GenCompare (Cell& a);
+    void GenCompare ( void );
 
-    void print (void) const;
+    void print (std::ofstream& ofs_) const;
+	
+	bool st ( void );
+
+	bool ex ( void );
 
     /*Possible going to receive it's next form. Going to check if they are equal. 
       if yes, then it is stable.*/

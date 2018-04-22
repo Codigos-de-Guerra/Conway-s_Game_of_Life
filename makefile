@@ -36,7 +36,7 @@ cell: $(bindir)/cell.o
 # Compiles the main
 game: $(srcdir)/main.cpp $(OBJS)
 	mkdir -p $(bindir)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $(bindir)/$@
 
 # Builds only the cell module
 $(bindir)/cell.o: $(srcdir)/cell.cpp $(incdir)/cell.hpp

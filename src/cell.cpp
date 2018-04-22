@@ -286,12 +286,12 @@ Cell & Cell::operator= (Cell &a) {
 
 	for(int i(0); i < lin; i++){
 		for(int j(0); j< col; j++){
-			a.ptr_M[i][j] = ptr_M[i][j];
+			ptr_M[i][j] = a.ptr_M[i][j];
 		}
 	}
 	
 	std::cout << "Eita rolou";
-	return Cell &a;
+	return *this;
 	
 }
 

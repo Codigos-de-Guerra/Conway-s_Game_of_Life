@@ -67,15 +67,17 @@ int main(int argc, char **argv) {
 		if(estavel == true || extinto == true) {
 			break;
 		}
-		char answer; //Variable to determinated if user wants to print
+		
+		char answer; // To determinate if user wants to print
 		std::cout<<"Do you wish to keep printing?\nPress y (YES) or n (NO):\n";
 		std::cin >> answer;
+		
 		if(answer == 'n' or answer == 'N') {
 			break;
 		}
 		temp.print(ofs);
 
-		sel.operator= ( temp );
+		temp = sel;
 
 		/*Como no início eu sempre crio 'temp' a partir de sel, e sel é sempre
 		 a mesma coisa, então o temp criado também sempre será a mesma coisa

@@ -1,3 +1,5 @@
+
+
 #include "cell.hpp"
 
 Cell::Cell(int height, int lenght) {
@@ -12,6 +14,8 @@ Cell::Cell(int height, int lenght) {
 	col = lenght;
 }
 
+/*------------------------------Destrutor------------------------------------*/
+
 Cell::~Cell () {
 	std::cout << "Destructor ativado!\n";
     for(int i=0; i < lin; i++) {
@@ -21,6 +25,8 @@ Cell::~Cell () {
     delete [] ptr_M;
 	delete [] ptr_M_bkp;
 }
+
+/*--------------------------Set-Alive Function-------------------------------*/
 
 void Cell::set_alive (std::string file, std::ifstream& ifs_) {
     std::cout << "Constructor ativado!\n";
@@ -55,6 +61,8 @@ void Cell::set_alive (std::string file, std::ifstream& ifs_) {
 	ifs_.close();
 }
 
+/*-------------------------Alive-couting Function----------------------------*/
+
 int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 	// Variable to be incremented when current cell has a living neighbor.
 	int count = 0;
@@ -62,7 +70,8 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 	int inicio, final;
 /*---------------------------------------------------------------------------*/
 	/*
-	This section establishes from where, or until where to check the xpos positions.
+	This section establishes from where, or until where to check the xpos posi-
+	tions.
 	Therefore, avoid the error of checking off-border values.
 	*/
 	//First, I considerate it being on the left border.
@@ -83,7 +92,8 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 /*---------------------------------------------------------------------------*/
 
 	/*
-	On this section, my counting for alive cells surrounding the moment cell takes action.
+	On this section, my counting for alive cells surrounding the moment cell 
+	takes action.
 	I will also check ypos positions for bordes.
 	*/
 
@@ -103,7 +113,9 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 
 		//std::cout << aa << "\n";
 		if(rhs.ptr_M[ypos][i] == rhs.live_cell) {
-			if( i == xpos) continue; // This would check the cell itself, which i do not want to happen.
+			if( i == xpos) continue; 
+			/* This would check the cell itself, which
+			   i do not want to happen.*/
 			count++;
 		}
 	}
@@ -120,6 +132,8 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 	return count;
 }
 
+/*----------------------Generation Backup Function---------------------------*/
+
 void Cell::GenBackup (Cell& a){
 
 	// Making a full backup of the matrix
@@ -130,26 +144,28 @@ void Cell::GenBackup (Cell& a){
 	}
 }
 
+/*----------------------Future Generation Function---------------------------*/
 void Cell::future (Cell& a) {
   
 	live_cell = a.live_cell;
 	dead_cell = a.dead_cell;
 
-	//Here, I check if the previous found cells follows de rules to survive and to be bornt.
+	/*Here, I check if the previous found cells follows de rules to survive and
+	  to be bornt.*/
 	for(int i=0; i < a.lin; i++) {
 		for(int j=0; j < a.col; j++) {
 			//------------Prints to help undestand what is going on.
 			//std::cout << "Started checking: " << i << " " << j << "\n\n";
 
-			//Function to determine how many alive neighbors a specific cell has.
+			//Function to determine how many alive neighbors a cell has.
 			int living_neighbors = Cell::alive_counting(i, j, a);
 
 			//------------Prints to help undestand what is going on.
 			//std::cout << "Vizinhos vivos: " << living_neighbors << "\n";
 
 			/*
-			If current cell is alive, then it must have 2 or 3 living neighbors to survive.
-			Otherwise, it dies.
+			If current cell is alive, then it must have 2 or 3 living neighbors
+			to survive. Otherwise, it dies.
 			*/
 			if(a.ptr_M[i][j] == a.live_cell) {
 				if(living_neighbors == 2 || living_neighbors == 3) {
@@ -161,8 +177,8 @@ void Cell::future (Cell& a) {
 			}
 
 			/*
-			If current cell is dead, then it must have exactly 3 neighbors in order to be bornt.
-			Otherwise, it stays dead.
+			If current cell is dead, then it must have exactly 3 neighbors in 
+			order to be bornt. Otherwise, it stays dead.
 			*/
 			else {
 				if(living_neighbors == 3) {
@@ -178,8 +194,11 @@ void Cell::future (Cell& a) {
 	}
 }
 
-/** This function will tell me if the board is stable and/or if all the cells are
-	dead.*/ 
+/** This function will tell me if the board is stable and/or if all the cells 
+	are	dead.*/ 
+
+/*-----------------------Compare Generations Function------------------------*/
+
 void Cell::GenCompare ( void ) {
 
 	bool flag_ex = true;//Flag that determinates if extincty has been confirmed.
@@ -222,6 +241,8 @@ void Cell::GenCompare ( void ) {
 	//if( flag == true ) // [-> The whole board is dead <-]
 }		
 
+/*-----------------------------Print Function--------------------------------*/
+
 void Cell::print (std::ofstream& ofs_) const {
 	ofs_.open("data/saida.txt", std::ofstream::app);
 
@@ -238,13 +259,40 @@ void Cell::print (std::ofstream& ofs_) const {
 	ofs_.close();
 }
 
+/*---------------------------Stability Funtion-------------------------------*/
+
 bool Cell::st( void ) {
 	bool ab = stable;
 	return ab;
 }
 
+/*--------------------------Extinction Function------------------------------*/
+
 bool Cell::ex( void ) {
 	bool ba = extinct;
 	return ba;
 }
+
+/*----------------------------New iqual operator-----------------------------*/
+
+/* Deus me salva nesse operador */
+/* Aqui vemos um básico operador de igualdade -> Dúvida em relação a entrada e saida,
+   antes era uma função void. mas precisa retornar o objeto.
+   aqui estamos nós. 
+
+   Mudanças também na cell.hpp (declarei o operador) e na main (Evoquei a sobrecarga)
+ */
+Cell & Cell::operator= (Cell &a) {
+
+	for(int i(0); i < lin; i++){
+		for(int j(0); j< col; j++){
+			a.ptr_M[i][j] = ptr_M[i][j];
+		}
+	}
+	
+	std::cout << "Eita rolou";
+	return Cell &a;
+	
+}
+
 

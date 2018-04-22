@@ -47,6 +47,8 @@ class Cell{
 
 	bool ex ( void );
 
+    Cell & operator= (Cell & a); // Testindo new operator iqual
+
     /*Possible going to receive it's next form. Going to check if they are equal. 
       if yes, then it is stable.*/
 //	void stable (Cell& next);

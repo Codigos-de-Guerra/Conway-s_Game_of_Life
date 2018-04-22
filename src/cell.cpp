@@ -1,12 +1,15 @@
 #include "cell.hpp"
 
 Cell::Cell(int height, int lenght) {
-    ptr_M = new char*[height];
-    for(int i=0; i < height; i++) {
-      *(ptr_M+i) = new char[lenght];
-    }
-    lin = height;
-    col = lenght;
+	ptr_M = new char*[height];
+	ptr_M_bkp = new char*[height];
+	for(int i=0; i < height; i++) {
+		*(ptr_M+i) = new char[lenght];
+		*(ptr_M_bkp+i) = new char[lenght];
+	}
+
+	lin = height;
+	col = lenght;
 }
 
 Cell::~Cell () {
@@ -120,8 +123,8 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 void Cell::GenBackup (Cell& a){
 
 	// Making a full backup of the matrix
-	for(int i(0); i < a.lin; i++) {
-		for(int j(0); j < a.col; j++) {
+	for(int i(0); i < lin; i++) {
+		for(int j(0); j < col; j++) {
 			ptr_M_bkp[i][j] = a.ptr_M[i][j]; 
 		}
 	}

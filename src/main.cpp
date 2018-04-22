@@ -32,10 +32,18 @@ int main(int argc, char **argv) {
 
 /*--------Making next state from the first cell state---------*/
 	Cell sel(linhas, colunas);
+	std::cout << "ok0\n";
 	sel.GenBackup(cel);
+	std::cout << "ok1\n";
+
 	sel.future(cel);
+	std::cout << "ok2\n";
+
 	sel.GenCompare();
+	std::cout << "ok3\n";
+
 	sel.print(ofs);
+	std::cout << "ok4\n";
 
 /*---------Now, we start asking if user wants to keep printing next states-----------------*/
 	/* Also, if the cell state is extinct or already stablized, we won't print at all */
@@ -58,6 +66,16 @@ int main(int argc, char **argv) {
 			break;
 		}
 		temp.print(ofs);
+
+		/*Como no início eu sempre crio 'temp' a partir de sel, e sel é sempre a mesma coisa, então o temp criado também sempre será a mesma coisa
+		Precisamos atualizar sel para receber esse temp que acabamos de criar, para então na próxima iteração do while o 'temp' receber esse novo sel,
+			e assim estaremos sempre gerando um novo 'temp' para printar.
+		Resumindo, no final do corpo do while precisamos de algo assim:*/
+
+//		sel = temp;
+
+	/* Tente fazer isso Oziel-san */
+
 	}
 	
 	return 0;

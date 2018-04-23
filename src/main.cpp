@@ -2,7 +2,7 @@
 
 #include "cell.hpp"
 #include <sstream>
-
+//q
 int main(int argc, char **argv) {
 
 /**---------------------Checking command line section------------------------*/
@@ -11,7 +11,9 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 	
-	// Through command line, client is going to define if wants to keep generating until stable or extinct state is reached
+	/* Through command line, client is going to define if wants to keep
+	generating until stable or extinct state is reached
+	*/
 	std::istringstream as(argv[1]);
 	std::string until;
 	if(!(as >> until)) {
@@ -53,16 +55,16 @@ int main(int argc, char **argv) {
 	long int counter = 0;			//This will keep track of generation number.
 
 /**------------------------Creates first cell state--------------------------*/
-	Cell cel(linhas, colunas);
-	cel.set_alive(in_filename, ifs);	
-	cel.print(ofs, counter);
+	Cell start_cell(linhas, colunas);
+	start_cell.set_alive(in_filename, ifs);	
+	start_cell.print(ofs, counter);
 
 /**---------------Making next state from the first cell state----------------*/
-	Cell sel(linhas, colunas);
-	sel.GenBackup(cel);
-	sel.future(cel);
-	sel.GenCompare();
-	sel.print(ofs, counter);
+	Cell perfect_cell(linhas, colunas);
+	perfect_cell.GenBackup(start_cell);
+	perfect_cell.future(start_cell);
+	perfect_cell.GenCompare();
+	perfect_cell.print(ofs, counter);
 
 /**----Now, we start asking if user wants to keep printing next states-------*/
 
@@ -71,33 +73,39 @@ int main(int argc, char **argv) {
 	
 	while( 1 > 0) {
 		
-		Cell temp(linhas, colunas);
-		temp.GenBackup(sel);
-		temp.future(sel);
-		temp.GenCompare();
+		Cell temp_cell(linhas, colunas);
+		temp_cell.GenBackup(perfect_cell);
+		temp_cell.future(perfect_cell);
+		temp_cell.GenCompare();
 		
-		bool estavel = temp.st();
-		bool extinto = temp.ex();
+		bool estavel = temp_cell.st();
+		bool extinto = temp_cell.ex();
 
 		if(estavel == true && extinto == false) {
-			std::cout << "Previously found generation is already stabilized! Won't generate more.\n";
-			//ofs << "Previously found generation is already stabilized! Won't generate more.\n";
+			temp_cell.print(ofs, counter);
+
+			std::cout << ">>> Generation " << counter-1 << " is already stabilized!";
+			std::cout << " Both " << counter-1 << " and " << counter << " generations are equal.\n";
+			std::cout << ">>> No need to keep generating. \n";
+
+			ofs << ">>> Generation " << counter-1 << " is already stabilized!";
+			ofs << " Both " << counter-1 << " and " << counter << " generations are equal.\n";
+			ofs << ">>> No need to keep generating. \n";
+
 			break;
 		}
 		else if(estavel == false && extinto == true) {
-			std::cout << "Next generation would be extinct! Won't generate more.\n";
-			//ofs << "Next generation would be extinct! Won't generate more.\n";
-			break;
-		}
-		else if(estavel == true && extinto == true) {
-			std::cout << "Previously generation is already stabilized and in it's final alive form! Won't generate more.\n";
-			//ofs << "Previously generation is already stabilized and in it's final alive form! Won't generate more.\n";
-			break;
-		}
+			temp_cell.print(ofs, counter);
+			std::cout << ">>> Generation " << counter << " is extinct!\n";
+			std::cout << ">>> Entire body cell is dead! Won't generate more.\n";
 
+			ofs << ">>> Generation " << counter << " is extinct!\n";
+			ofs << ">>> Entire body cell is dead! Won't generate more.\n";
+			break;
+		}
 		if(until == "-u") {
-			temp.print(ofs, counter);
-			sel = temp;
+			temp_cell.print(ofs, counter);
+			perfect_cell = temp_cell;
 		}
 		else if(until == "-yn") {		
 			char answer; // To determinate if user wants to print
@@ -108,10 +116,11 @@ int main(int argc, char **argv) {
 				break;
 			}
 			
-			temp.print(ofs, counter);
-			sel = temp;
+			temp_cell.print(ofs, counter);
+			perfect_cell = temp_cell;
 		}
 	}
+
 	ofs.close();
 	return 0;
 }

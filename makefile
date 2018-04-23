@@ -11,7 +11,7 @@ datdir = ./data
 # Macros
 CC = g++
 CFLAGS = -Wall -std=c++11 -lm -I$(incdir)
-RM = rm -v
+RM = rm -v -f
 OBJS = $(addprefix $(bindir)/,cell.o)
 
 #STILL GOING TO ADD MORE OBJECTS
@@ -37,7 +37,7 @@ cell: $(bindir)/cell.o
 life: $(srcdir)/main.cpp $(OBJS)
 	mkdir -p $(bindir)
 	$(CC) $(CFLAGS) $^ -o $(bindir)/$@
-	ln -sFv $(bindir)/$@ $@
+	ln -sfv $(bindir)/$@ $@
 
 # Builds only the cell module
 $(bindir)/cell.o: $(srcdir)/cell.cpp $(incdir)/cell.hpp

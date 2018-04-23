@@ -28,26 +28,19 @@ int main(int argc, char **argv) {
 /**--------------------------------------------------------------------------*/
 	std::ifstream ifs;
 	std::ofstream ofs;
+	long int counter;
 
 /**------------------------Creates first cell state--------------------------*/
 	Cell cel(linhas, colunas);
 	cel.set_alive(in_filename, ifs);	
-	cel.print(ofs);
+	cel.print(ofs, counter);
 
 /**---------------Making next state from the first cell state----------------*/
 	Cell sel(linhas, colunas);
-	std::cout << "ok0\n";
 	sel.GenBackup(cel);
-	std::cout << "ok1\n";
-
 	sel.future(cel);
-	std::cout << "ok2\n";
-
 	sel.GenCompare();
-	std::cout << "ok3\n";
-
-	sel.print(ofs);
-	std::cout << "ok4\n";
+	sel.print(ofs, counter);
 
 /**----Now, we start asking if user wants to keep printing next states-------*/
 
@@ -75,9 +68,9 @@ int main(int argc, char **argv) {
 		if(answer == 'n' or answer == 'N') {
 			break;
 		}
-		temp.print(ofs);
+		temp.print(ofs, counter);
 
-		temp = sel;
+		sel = temp;
 
 		/*Como no início eu sempre crio 'temp' a partir de sel, e sel é sempre
 		 a mesma coisa, então o temp criado também sempre será a mesma coisa

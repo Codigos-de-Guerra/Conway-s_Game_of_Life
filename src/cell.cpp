@@ -243,7 +243,7 @@ void Cell::GenCompare ( void ) {
 
 /*-----------------------------Print Function--------------------------------*/
 
-void Cell::print (std::ofstream& ofs_) const {
+void Cell::print (std::ofstream& ofs_, long int &counter) const {
 	ofs_.open("data/saida.txt", std::ofstream::app);
 
 	for(auto i=0; i < lin; i++) {
@@ -282,17 +282,19 @@ bool Cell::ex( void ) {
 
    Mudanças também na cell.hpp (declarei o operador) e na main (Evoquei a sobrecarga)
  */
-Cell & Cell::operator= (Cell &a) {
-
-	for(int i(0); i < lin; i++){
-		for(int j(0); j< col; j++){
-			ptr_M[i][j] = a.ptr_M[i][j];
+Cell & Cell::operator= (const Cell &a) {
+	this->stable = a.stable;
+	this->extinct = a.extinct;
+	this->lin = a.lin;
+	this->col = a.col;
+	this->live_cell = a.live_cell;
+	this->dead_cell = a.dead_cell;
+	for(int i(0); i < lin; i++) {
+		for(int j(0); j< col; j++) {
+			this->ptr_M[i][j] = a.ptr_M[i][j];
+			this->ptr_M_bkp[i][j] = a.ptr_M_bkp[i][j];
 		}
 	}
 	
-	std::cout << "Eita rolou";
 	return *this;
-	
 }
-
-

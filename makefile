@@ -25,7 +25,7 @@ OBJS = $(addprefix $(bindir)/,cell.o)
 all: main build
 
 # Use "make main" to compile only the main
-main: game
+main: life
 
 # Use "make build" to build all modules
 build: cell
@@ -34,7 +34,7 @@ build: cell
 cell: $(bindir)/cell.o
 
 # Compiles the main
-game: $(srcdir)/main.cpp $(OBJS)
+life: $(srcdir)/main.cpp $(OBJS)
 	mkdir -p $(bindir)
 	$(CC) $(CFLAGS) $^ -o $(bindir)/$@
 

@@ -6,16 +6,37 @@
 int main(int argc, char **argv) {
 
 /**---------------------Checking command line section------------------------*/
-	if(argc != 2) {
+	if(argc != 4) {
 		std::cerr << "Invalid command line input!\n";
 		return -1;
 	}
-
-	std::istringstream ss(argv[1]);
-	std::string in_filename;
-	if(!(ss >> in_filename)) {
+	
+	// Through command line, client is going to define if wants to keep generating until stable or extinct state is reached
+	std::istringstream as(argv[1]);
+	std::string until;
+	if(!(as >> until)) {
 		std::cerr << "Not a valid string\n";
 		return -2;
+	}
+	if(until != "-u" && until != "-yn") {
+		std::cerr << "Not a valid command line argument!\n";
+		return -3;
+	}
+
+	//Through command line, user is defining the data input file
+	std::istringstream bs(argv[2]);
+	std::string in_filename;
+	if(!(bs >> in_filename)) {
+		std::cerr << "Not a valid string\n";
+		return -4;
+	}
+	
+	// Through command line, user is defining the data output file
+	std::istringstream cs(argv[3]);
+	std::string out_filename;
+	if(!(cs >> out_filename)) {
+		std::cerr << "Not a valid string\n";
+		return -5;
 	}
 
 /**-------------------Getting height and lenght of matrix--------------------*/
@@ -28,7 +49,8 @@ int main(int argc, char **argv) {
 /**--------------------------------------------------------------------------*/
 	std::ifstream ifs;
 	std::ofstream ofs;
-	long int counter;
+	ofs.open(out_filename.c_str());
+	long int counter = 0;			//This will keep track of generation number.
 
 /**------------------------Creates first cell state--------------------------*/
 	Cell cel(linhas, colunas);
@@ -57,33 +79,39 @@ int main(int argc, char **argv) {
 		bool estavel = temp.st();
 		bool extinto = temp.ex();
 
-		if(estavel == true || extinto == true) {
+		if(estavel == true && extinto == false) {
+			std::cout << "Previously found generation is already stabilized! Won't generate more.\n";
+			//ofs << "Previously found generation is already stabilized! Won't generate more.\n";
 			break;
 		}
-		
-		char answer; // To determinate if user wants to print
-		std::cout<<"Do you wish to keep printing?\nPress y (YES) or n (NO):\n";
-		std::cin >> answer;
-		
-		if(answer == 'n' or answer == 'N') {
+		else if(estavel == false && extinto == true) {
+			std::cout << "Next generation would be extinct! Won't generate more.\n";
+			//ofs << "Next generation would be extinct! Won't generate more.\n";
 			break;
 		}
-		temp.print(ofs, counter);
+		else if(estavel == true && extinto == true) {
+			std::cout << "Previously generation is already stabilized and in it's final alive form! Won't generate more.\n";
+			//ofs << "Previously generation is already stabilized and in it's final alive form! Won't generate more.\n";
+			break;
+		}
 
-		sel = temp;
-
-		/*Como no início eu sempre crio 'temp' a partir de sel, e sel é sempre
-		 a mesma coisa, então o temp criado também sempre será a mesma coisa
-		Precisamos atualizar sel para receber esse temp que acabamos de criar,
-		para então na próxima iteração do while o 'temp' receber esse novo sel,
-		e assim estaremos sempre gerando um novo 'temp' para printar.
-		Resumindo, no final do corpo do while precisamos de algo assim:*/
-
-		//sel = temp;
-
-	/* Tente fazer isso Oziel-san */
-
+		if(until == "-u") {
+			temp.print(ofs, counter);
+			sel = temp;
+		}
+		else if(until == "-yn") {		
+			char answer; // To determinate if user wants to print
+			std::cout<<"Do you wish to keep printing? Press y for YES or n for NO: ";
+			std::cin >> answer;
+		
+			if(answer == 'n' or answer == 'N') {
+				break;
+			}
+			
+			temp.print(ofs, counter);
+			sel = temp;
+		}
 	}
-	
+	ofs.close();
 	return 0;
 }

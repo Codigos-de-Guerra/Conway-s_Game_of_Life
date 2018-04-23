@@ -1,5 +1,3 @@
-
-
 #include "cell.hpp"
 
 Cell::Cell(int height, int lenght) {
@@ -17,7 +15,6 @@ Cell::Cell(int height, int lenght) {
 /*------------------------------Destrutor------------------------------------*/
 
 Cell::~Cell () {
-	std::cout << "Destructor ativado!\n";
     for(int i=0; i < lin; i++) {
 		delete [] ptr_M[i];
 		delete [] ptr_M_bkp[i];
@@ -29,7 +26,6 @@ Cell::~Cell () {
 /*--------------------------Set-Alive Function-------------------------------*/
 
 void Cell::set_alive (std::string file, std::ifstream& ifs_) {
-    std::cout << "Constructor ativado!\n";
     int nLin, nCol;
     char vivo, caracter;
 
@@ -106,12 +102,6 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 		}
 	}
 	for( int i=inicio; i < final; i++) {
-		//std::cout << rhs.ptr_M[ypos][i] << "\n";
-		//bool aa = (rhs.ptr_M[ypos][i] == rhs.live_cell);
-
-		//std::cout << rhs.live_cell << "\n";
-
-		//std::cout << aa << "\n";
 		if(rhs.ptr_M[ypos][i] == rhs.live_cell) {
 			if( i == xpos) continue; 
 			/* This would check the cell itself, which
@@ -154,14 +144,8 @@ void Cell::future (Cell& a) {
 	  to be bornt.*/
 	for(int i=0; i < a.lin; i++) {
 		for(int j=0; j < a.col; j++) {
-			//------------Prints to help undestand what is going on.
-			//std::cout << "Started checking: " << i << " " << j << "\n\n";
-
 			//Function to determine how many alive neighbors a cell has.
 			int living_neighbors = Cell::alive_counting(i, j, a);
-
-			//------------Prints to help undestand what is going on.
-			//std::cout << "Vizinhos vivos: " << living_neighbors << "\n";
 
 			/*
 			If current cell is alive, then it must have 2 or 3 living neighbors
@@ -188,8 +172,6 @@ void Cell::future (Cell& a) {
 					ptr_M[i][j] = dead_cell;
 				}
 			}
-			//------------Prints to help undestand what is going on.
-			//std::cout << "Finished checking: " << i << " " << j << "\n\n";
 		}
 	}
 }
@@ -243,52 +225,39 @@ void Cell::GenCompare ( void ) {
 
 /*-----------------------------Print Function--------------------------------*/
 
-void Cell::print (std::ofstream& ofs_, long int &counter) const {
-	ofs_.open("data/saida.txt", std::ofstream::app);
+void Cell::print (std::ofstream& ofs, long int &counter) const {
 
+	/*This variable is my counter. Keeps track of which generation we are looking at*/
+	counter++;
+	
+	std::cout << "Generation number: " << counter << "\n";
+	ofs << "Generation number: " << counter << "\n";
 	for(auto i=0; i < lin; i++) {
 		for(auto j=0; j < col; j++) {
 			std::cout << ptr_M[i][j];
-			ofs_ << ptr_M[i][j];
+			ofs << ptr_M[i][j];
 		}
 		std::cout << "\n";
-		ofs_ << "\n";
+		ofs << "\n";
 	}
 	std::cout << "\n\n";
-	ofs_ << "\n\n";
-	ofs_.close();
+	ofs << "\n\n";
 }
 
 /*---------------------------Stability Funtion-------------------------------*/
-
 bool Cell::st( void ) {
-	bool ab = stable;
-	return ab;
+	return stable;
 }
 
 /*--------------------------Extinction Function------------------------------*/
-
 bool Cell::ex( void ) {
-	bool ba = extinct;
-	return ba;
+	return extinct;
 }
 
 /*----------------------------New iqual operator-----------------------------*/
-
-/* Deus me salva nesse operador */
-/* Aqui vemos um básico operador de igualdade -> Dúvida em relação a entrada e saida,
-   antes era uma função void. mas precisa retornar o objeto.
-   aqui estamos nós. 
-
-   Mudanças também na cell.hpp (declarei o operador) e na main (Evoquei a sobrecarga)
- */
-Cell & Cell::operator= (const Cell &a) {
+Cell& Cell::operator= (const Cell &a) {
 	this->stable = a.stable;
 	this->extinct = a.extinct;
-	this->lin = a.lin;
-	this->col = a.col;
-	this->live_cell = a.live_cell;
-	this->dead_cell = a.dead_cell;
 	for(int i(0); i < lin; i++) {
 		for(int j(0); j< col; j++) {
 			this->ptr_M[i][j] = a.ptr_M[i][j];
@@ -298,3 +267,5 @@ Cell & Cell::operator= (const Cell &a) {
 	
 	return *this;
 }
+
+

@@ -1,3 +1,7 @@
+/** Authors: Daniel Guerra and Oziel Alves
+ *  @date April, 23.
+ */
+
 #include "cell.hpp"
 
 Cell::Cell(int height, int lenght) {
@@ -41,7 +45,7 @@ void Cell::set_alive (std::string file, std::ifstream& ifs_) {
 		}
 	}
 	
-	int count = 0; //Variable for breaking purposes
+	int count = 0; ///Variable for breaking purposes
 	for(int i=0; i < nLin; i++) {
 		for(int j=0; j < nCol; j++) {
 			if(ptr_M[i][j] != live_cell) {
@@ -65,19 +69,18 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 
 	int inicio, final;
 /*---------------------------------------------------------------------------*/
-	/*
-	This section establishes from where, or until where to check the xpos posi-
-	tions.
-	Therefore, avoid the error of checking off-border values.
-	*/
-	//First, I considerate it being on the left border.
+	/*!< This section establishes from where, or until where to check the xpos 
+	 * positions. Therefore, avoid the error of checking off-border values.
+	 */
+	
+	///First, I considerate it being on the left border.
 	if(xpos == 0) {
 		inicio = xpos;
 	}
 	else {
 		inicio = xpos-1;
 	}
-	//Then, I considerate it being on the right border.
+	///Then, I considerate it being on the right border.
 	if(xpos == rhs.col - 1) {
 		final = xpos+1;
 	}
@@ -87,13 +90,12 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 
 /*---------------------------------------------------------------------------*/
 
-	/*
-	On this section, my counting for alive cells surrounding the moment cell 
-	takes action.
-	I will also check ypos positions for bordes.
-	*/
+	/*!< On this section, my counting for alive cells surrounding the moment 
+	 * cell takes action.I will also check ypos positions for bordes.
+	 */
+		
 
-	/* Only calculates when not at upper border. */
+	/** Only calculates when not at upper border. */
 	if(ypos > 0) {
 		for( int i=inicio; i < final; i++) {
 			if(rhs.ptr_M[ypos-1][i] == rhs.live_cell) {
@@ -110,7 +112,7 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 		}
 	}
 
-	/*Only calculates if i am not looking at the lower border. */
+	/** Only calculates if i am not looking at the lower border. */
 	if(ypos < rhs.lin - 1) {
 		for( int i=inicio; i < final; i++) {
 			if(rhs.ptr_M[ypos+1][i] == rhs.live_cell) {
@@ -126,7 +128,7 @@ int Cell::alive_counting (int ypos, int xpos, Cell& rhs) {
 
 void Cell::GenBackup (Cell& a){
 
-	// Making a full backup of the matrix
+	/// Making a full backup of the matrix
 	for(int i(0); i < lin; i++) {
 		for(int j(0); j < col; j++) {
 			ptr_M_bkp[i][j] = a.ptr_M[i][j]; 
@@ -140,17 +142,17 @@ void Cell::future (Cell& a) {
 	live_cell = a.live_cell;
 	dead_cell = a.dead_cell;
 
-	/*Here, I check if the previous found cells follows de rules to survive and
-	  to be bornt.*/
+	/*!< Here, I check if the previous found cells follows de rules to survive 
+	 * and to be bornt.*/
 	for(int i=0; i < a.lin; i++) {
 		for(int j=0; j < a.col; j++) {
-			//Function to determine how many alive neighbors a cell has.
+			
+			///Function to determine how many alive neighbors a cell has.
 			int living_neighbors = Cell::alive_counting(i, j, a);
 
-			/*
-			If current cell is alive, then it must have 2 or 3 living neighbors
-			to survive. Otherwise, it dies.
-			*/
+			/*!< If current cell is alive, then it must have 2 or 3 living 
+			 * neighborsto survive. Otherwise, it dies.
+			 */
 			if(a.ptr_M[i][j] == a.live_cell) {
 				if(living_neighbors == 2 || living_neighbors == 3) {
 					ptr_M[i][j] = live_cell;
@@ -160,10 +162,9 @@ void Cell::future (Cell& a) {
 				}
 			}
 
-			/*
-			If current cell is dead, then it must have exactly 3 neighbors in 
-			order to be bornt. Otherwise, it stays dead.
-			*/
+			/*!<If current cell is dead, then it must have exactly 3 neighbors 
+			 * in order to be bornt. Otherwise, it stays dead.
+			 */
 			else {
 				if(living_neighbors == 3) {
 					ptr_M[i][j] = a.live_cell;
@@ -177,23 +178,25 @@ void Cell::future (Cell& a) {
 }
 
 /** This function will tell me if the board is stable and/or if all the cells 
-	are	dead.*/ 
+ * are	dead.
+ */ 
 
 /*-----------------------Compare Generations Function------------------------*/
 
 void Cell::GenCompare ( void ) {
 
-	bool flag_ex = true;//Flag that determinates if extincty has been confirmed.
-	bool flag_st = true;//Flag that sees if stability has been confirmed.
+	///Flag that determinates if extincty has been confirmed.
+	bool flag_ex = true;
+	///Flag that sees if stability has been confirmed.
+	bool flag_st = true;
 
-	//As standart, we will consider both states to be true.
+	///As standart, we will consider both states to be true.
 	stable = true;
 	extinct = true;
 
-	/*
-	Checks if previous cell state is equal to actual cell state.
-	Equivalent to a stable function.
-	*/
+	/*!< Checks if previous cell state is equal to actual cell state. 
+	 * Equivalent to a stable function.
+	 */
 	for(int i(0); i < lin; i++) {
     	for(int j(0); j < col; j++) {
     		if(ptr_M_bkp[i][j] != ptr_M[i][j]) {
@@ -205,10 +208,9 @@ void Cell::GenCompare ( void ) {
 		if(flag_st == false) break;
 	}
 
-	/*
-	Checks if actual cell state represents only dead cells.
-	Equivalent to a extinct function.
-	*/
+	/*!< Checks if actual cell state represents only dead cells. 
+	 * Equivalent to a extinct function.
+	 */
 	for(int i(0); i < lin; i++) {
 		for(int j(0); j < col; j++) {
 			if(ptr_M[i][j] != dead_cell) {
@@ -219,15 +221,15 @@ void Cell::GenCompare ( void ) {
 		}
 		if(flag_ex == false) break;
 	}
-
-	//if( flag == true ) // [-> The whole board is dead <-]
 }		
 
 /*-----------------------------Print Function--------------------------------*/
 
 void Cell::print (std::ofstream& ofs, long int &counter) const {
 
-	/*This variable is my counter. Keeps track of which generation we are looking at*/
+	/*!< This variable is my counter. Keeps track of which generation we are 
+	 * looking at
+	 */
 	counter++;
 	
 	std::cout << "Generation number: " << counter << "\n";
@@ -245,16 +247,19 @@ void Cell::print (std::ofstream& ofs, long int &counter) const {
 }
 
 /*---------------------------Stability Funtion-------------------------------*/
+
 bool Cell::st( void ) {
 	return stable;
 }
 
 /*--------------------------Extinction Function------------------------------*/
+
 bool Cell::ex( void ) {
 	return extinct;
 }
 
 /*----------------------------New iqual operator-----------------------------*/
+
 Cell& Cell::operator= (const Cell &a) {
 	this->stable = a.stable;
 	this->extinct = a.extinct;

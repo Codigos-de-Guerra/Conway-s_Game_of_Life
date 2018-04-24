@@ -1,4 +1,8 @@
 /** Authors: Daniel Guerra and Oziel Alves 
+ *	
+ *	\ Here is defined the Game of Life's main function
+ *	\ The main function will read the entry file and start the game
+ * 	
  * 	@date April, 23.
  */
 

@@ -1,5 +1,9 @@
 /** Authors: Daniel Guerra and Oziel Alves
- *  @date April, 23.
+ *
+ * \ Creating Cell class and it's dependencies
+ * \ Functions and operators will also be declared here
+ * 
+ * @data April, 23.
  */
 
 #include "cell.hpp"

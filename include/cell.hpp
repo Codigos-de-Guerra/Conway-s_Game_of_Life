@@ -1,9 +1,10 @@
-/*!
-* \On this code we define the Cell class which will contain some of the game 
-* like the board parameters and the cell status.
-* 
-* @date April, 19th.
-*/
+/*	!Authors: Daniel Guerra and Oziel Alves
+ *
+ * 	\ On this code we define the Cell class which will contain some of the game
+ *	\ depedencies, like the board parameters and the cell status.
+ * 
+ * @date April, 19th.
+ */
 
 #ifndef CELL_H_
 #define CELL_H_
@@ -22,8 +23,9 @@ class Cell{
 	bool stable, extinct;
 
   public:
-    /** Common constructor. Allocates necessary usage space for matrix. 
-        Also initializes some private class variables. */
+    /** Common constructor. Allocates necessary usage space for matrix.
+	 * Also initializes some private class variables. 
+	 */
     Cell(int, int);
 /*----------------------Respectively, it's destructor.-----------------------*/
     

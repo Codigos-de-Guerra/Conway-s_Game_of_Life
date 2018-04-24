@@ -49,9 +49,6 @@ class Cell{
 
     Cell & operator= (const Cell&); // Testindo new operator iqual
 
-    /*Possible going to receive it's next form. Going to check if they are equal. 
-      if yes, then it is stable.*/
-//	void stable (Cell& next);
 };
 
 #endif

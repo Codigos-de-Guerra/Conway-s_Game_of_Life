@@ -32,12 +32,20 @@ make
 # TODO ... [ Abobrinhas ] 
 make run
 
-# Para limpar dados residuais (objetos, executáveis e dados gerados)
+# Para limpar dados residuais (objetos, executáveis e arquivos contendo dados gerados e utilizados)
 make clean
 ```
 
 ### Execução:
-//TODO
+No quesito de execução, o programa segue o seguinte escopo:
+```bash
+# Roda-se o executável com os seguintes argumentos de linha
+$ ./life $[OC]$ $[AE]$ $[AS]$
+```
+- `$[OC]$`: ``Opção do Cliente``.  Este argumento deve definir a preferência do cliente sobre até quando devemos gerar novas células.
+- `$[AE]$`: ``Arquivo de Entrada``. Este argumento deve representar o arquivo de entrada de dados a ser utilzado. Tal arquivo conterá as informações padrões para geração das células.
+- `$[AS]$`: ``Arquivo de Saída``. Este argumento deverá apresentar todos os grupos de células gerados desde a geração inicial, até se tornar estável, extinta ou o usuário definir a parada. Também conterá a contagem das gerações.
+
 
 ##### Referências:
 - [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)

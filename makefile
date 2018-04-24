@@ -37,6 +37,7 @@ cell: $(bindir)/cell.o
 life: $(srcdir)/main.cpp $(OBJS)
 	mkdir -p $(bindir)
 	$(CC) $(CFLAGS) $^ -o $(bindir)/$@
+	ln -sFv $(bindir)/$@ $@
 
 # Builds only the cell module
 $(bindir)/cell.o: $(srcdir)/cell.cpp $(incdir)/cell.hpp

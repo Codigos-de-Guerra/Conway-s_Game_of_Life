@@ -1,7 +1,5 @@
 # Makefile conventions
 
-#SHELL = ~/bin/bash
-
 # Directories
 srcdir = ./src
 incdir = ./include
@@ -11,7 +9,7 @@ datdir = ./data
 # Macros
 CC = g++
 CFLAGS = -Wall -std=c++11 -lm -I$(incdir)
-RM = rm -v -f
+RM = rm -fv
 OBJS = $(addprefix $(bindir)/,cell.o)
 
 #STILL GOING TO ADD MORE OBJECTS

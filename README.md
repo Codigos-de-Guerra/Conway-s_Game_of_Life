@@ -32,18 +32,18 @@ A primeira geração é criada aplicando as regras acima simultaneamente a cada 
 2) Feito isto, o repositório com o projeto poderá ser clonado, usde o comando:
 ```bash
 git clone https://github.com/ozielalves/Conway-s_Game_of_Life/
-cd Conway-s_Game_of_Life
+cd ~/Conway-s_Game_of_Life
+# Agora você terá entrado no diretório raiz do projeto.
 ```
 3) Para compilar, usar o seguintes comandos na raiz do repositório:
 ```bash
-# Compilar:
+# Compilar tudo:
 make
 
-# Para compilar e executar o algoritmo com parâmetros pré-definidos
-# TODO ... [ Abobrinhas ] 
-make run
+# Para limpar somente os objetos e executáveis(arquivos binários), e manter os arquivos contendo dados:
+make cleanbin
 
-# Para limpar dados residuais (objetos, executáveis e arquivos contendo dados gerados e utilizados)
+# Para limpar TODOS dados residuais (objetos, executáveis e arquivos contendo dados gerados e utilizados):
 make clean
 ```
 
@@ -53,6 +53,19 @@ No quesito de execução, o programa segue o seguinte escopo:
 # Roda-se o executável com os seguintes argumentos de linha
 $ ./life $[OC]$ $[AE]$ $[AS]$
 ```
-- `$[OC]$`: ``Opção do Cliente``.  Este argumento deve definir a preferência do cliente sobre até quando devemos gerar novas células.
-- `$[AE]$`: ``Arquivo de Entrada``. Este argumento deve representar o arquivo de entrada de dados a ser utilzado. Tal arquivo conterá as informações padrões para geração das células.
-- `$[AS]$`: ``Arquivo de Saída``. Este argumento deverá apresentar todos os grupos de células gerados desde a geração inicial, até se tornar estável, extinta ou o usuário definir a parada. Também conterá a contagem das gerações.
+- `$[OC]$`: ``Opção do Cliente``.  Este argumento deve definir a preferência do cliente sobre até quando devemos gerar novas células. Suas opções neste caso são somente digitar ```-u``` ou ```-yn```. Qualquer diferente disso gerará erro. Comando ```-u``` significa gerar até que as regras do jogo me impeçam de criar novas gerações diferentes. Comando ```-yn``` significa que além das regras de estabilidade e extinção, o cliente poderá pedir antecipadamente pela parada do programa.
+- `$[AE]$`: ``Arquivo de Entrada``. Este argumento deve representar o arquivo de entrada de dados a ser utilzado. Tal arquivo conterá as informações padrões para geração das células. Por padrão, os arquivos contendo dados a serem lidos devem se encontrar na pasta $data/$. Caso inserido arquivo inexistente, programa falhará.
+- `$[AS]$`: ``Arquivo de Saída``. Este argumento deverá apresentar todos os grupos de células gerados desde a geração inicial, até se tornar estável, extinta ou o usuário definir a parada. Também conterá a contagem das gerações. Também por padrão, tais arquivos de saída são criados na pasta $data/$. Caso digite um arquivo já existente, este será sobrescrito.
+
+#### Exemplo:
+```bash
+$ ./life -u data/entrada.txt data/saida.txt
+```
+Este comando gerará todas as gerações começadas a partir de 'data/entrada.txt', até que a estabilidade ou extinção ocorra.
+
+```bash
+$ ./life -yn data/entrada.dat data/saida.dat
+```
+
+Este comando gerará as gerações começadas a partir de 'data/entrada.dat' até onde o cliente desejar que sejam geradas, há não ser que os casos de estabilidade ou extinção sejam obtidos.
+

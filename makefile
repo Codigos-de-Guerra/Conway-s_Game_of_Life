@@ -1,3 +1,5 @@
+# Makefile made by Daniel Guerra (daniel.guerra13@hotmail.com)
+
 # Makefile conventions
 
 # Directories
@@ -54,4 +56,4 @@ cleandat:
 	$(RM) -r $(datdir)
 
 # Removes all objects, executables and data input and output files
-clean: cleanbin cleandat
+clean: cleanbin 

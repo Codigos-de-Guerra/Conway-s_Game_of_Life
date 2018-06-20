@@ -40,10 +40,10 @@ cd ~/Conway-s_Game_of_Life
 # Compilar tudo:
 make
 
-# Para limpar somente os objetos e executáveis(arquivos binários), e manter os arquivos contendo dados:
-make cleanbin
+# Para limpar os arquivos de teste com informações para gerar células:
+make cleandat
 
-# Para limpar TODOS dados residuais (objetos, executáveis e arquivos contendo dados gerados e utilizados):
+# Para limpar TODOS dados residuais (objetos, executáveis, e afins):
 make clean
 ```
 
